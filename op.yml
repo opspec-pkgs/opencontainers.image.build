@@ -1,0 +1,57 @@
+description: Builds an open container initiative (OCI) image
+name: github.com/opspec-pkgs/opencontainers.image.build
+opspec: 0.1.6
+inputs:
+  cacheDir:
+    dir:
+      default: /default_cache
+      description: directory used to cache images/layers across runs. Must be formatted as an [image-layout](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md)
+  context:
+    dir:
+      description: context for build
+      default: /default_context
+  instructions:
+    string:
+      default: Containerfile
+      description: build instructions in the format of a Containerfile/Dockerfile
+  username:
+    string:
+      constraints: { minLength: 1 }
+      description: username for auth w/ private registry
+      default: ' '
+  password:
+    string:
+      constraints: { minLength: 1 }
+      description: password for auth w/ private registry
+      default: ' '
+      isSecret: true
+  registry:
+    string:
+      description: private registry to pull image from
+      default: docker.io
+  imageName:
+    string:
+      constraints: { format: docker-image-ref }
+      description: name of image
+outputs:
+  imageTar:
+    file:
+      description: tar of image
+run:
+  container:
+    cmd: [ /cmd.sh ]
+    files:
+      /cmd.sh:
+      /Dockerfile: $(instructions)
+      /image.tar: $(imageTar)
+      /root/.docker/config.template.json:
+    dirs:
+      /buildContext: $(context)
+      /cacheDir: $(cacheDir)
+    envVars:
+      imageName:
+      password:
+      registry:
+      username:
+    image: { ref: 'opspecpkgs/opencontainers.image.build:1.0.0'}
+version: 1.0.0
