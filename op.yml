@@ -11,8 +11,7 @@ inputs:
       description: context for build
       default: /default_context
   instructions:
-    string:
-      default: Containerfile
+    file:
       description: build instructions in the format of a Containerfile/Dockerfile
   username:
     string:
