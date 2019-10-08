@@ -1,2 +1,2 @@
-FROM alpine:3.10.2
+FROM moby/buildkit:v0.6.2
 RUN apk add gettext

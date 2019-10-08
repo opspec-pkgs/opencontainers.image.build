@@ -30,10 +30,10 @@ op:
   inputs:
     # required
     imageName:
+    instructions:
     ### optional; uncomment to override default(s)
     # cacheDir: /default_cache
     # context: /default_context
-    # instructions: Containerfile
     # password:  
     # registry: docker.io
     # username:  

@@ -2,8 +2,6 @@
 
 set -e
 
-apk add -U gettext
-
 export auth=$(echo -n "${username}:${password}" | base64)
 
 envsubst < /root/.docker/config.template.json > /root/.docker/config.json
