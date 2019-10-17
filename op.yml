@@ -47,6 +47,7 @@ run:
     dirs:
       /buildContext: $(context)
       /cacheDir: $(cacheDir)
+      /default_cache:
     envVars:
       imageName:
       password:
