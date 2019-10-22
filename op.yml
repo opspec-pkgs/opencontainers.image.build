@@ -28,10 +28,6 @@ inputs:
     string:
       description: private registry to pull image from
       default: docker.io
-  imageName:
-    string:
-      constraints: { format: docker-image-ref }
-      description: name of image
 outputs:
   image:
     dir:
@@ -49,7 +45,6 @@ run:
       /default_cache:
       /image: $(image)
     envVars:
-      imageName:
       password:
       registry:
       username:

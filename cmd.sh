@@ -24,4 +24,5 @@ buildctl-daemonless.sh \
   --export-cache type=local,dest=/cacheDir
 
 # @todo remove once https://github.com/moby/buildkit/issues/1219
+echo "untarring image"
 tar -xf /image.tar -C /image

@@ -29,7 +29,6 @@ op:
   ref: github.com/opspec-pkgs/opencontainers.image.build#1.0.0
   inputs:
     # required
-    imageName:
     instructions:
     ### optional; uncomment to override default(s)
     # cacheDir: /default_cache
