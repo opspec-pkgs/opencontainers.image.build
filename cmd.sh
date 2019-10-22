@@ -12,6 +12,8 @@ digest=$(cat /cacheDir/index.json | jp -u "manifests[?annotations.\"org.opencont
 # ensure valid cache layout exists
 cp -R /default_cache/. /cacheDir
 
+/usr/bin/buildctl -v
+
 buildctl-daemonless.sh \
   build \
   --frontend dockerfile.v0 \
@@ -20,3 +22,6 @@ buildctl-daemonless.sh \
   --output type=oci,dest=/image.tar \
   --import-cache "type=local,src=/cacheDir,digest=$digest" \
   --export-cache type=local,dest=/cacheDir
+
+# @todo remove once https://github.com/moby/buildkit/issues/1219
+tar -xf /image.tar -C /image

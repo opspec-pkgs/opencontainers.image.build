@@ -33,21 +33,21 @@ inputs:
       constraints: { format: docker-image-ref }
       description: name of image
 outputs:
-  imageTar:
-    file:
-      description: tar of image
+  image:
+    dir:
+      description: image in form of [v1.0.1 OCI (Open Container Initiative) `image-layout`](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md)
 run:
   container:
     cmd: [ /cmd.sh ]
     files:
       /cmd.sh:
       /Dockerfile: $(instructions)
-      /image.tar: $(imageTar)
       /root/.docker/config.template.json:
     dirs:
       /buildContext: $(context)
       /cacheDir: $(cacheDir)
       /default_cache:
+      /image: $(image)
     envVars:
       imageName:
       password:

@@ -38,7 +38,7 @@ op:
     # registry: docker.io
     # username:  
   outputs:
-    imageTar:
+    image:
 ```
 
 # Support
