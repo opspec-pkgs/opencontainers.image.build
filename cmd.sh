@@ -6,13 +6,12 @@ set -e
 export auth=$(echo -n "${username}:${password}" | base64)
 envsubst < /root/.docker/config.template.json > /root/.docker/config.json
 
+# busybox cp doesn't have --no-clobber; use mv instead to ensure valid cacheDir exists
+cp -R /default_cache/. /default_cache_cp
+mv --no-clobber /default_cache_cp/* /cacheDir
+
 # until buildkit uses latest tag by default; need to provide explicit cache tag
 digest=$(cat /cacheDir/index.json | jp -u "manifests[?annotations.\"org.opencontainers.image.ref.name\"=='latest'].digest | [0]")
-
-# ensure valid cache layout exists
-cp -R /default_cache/. /cacheDir
-
-/usr/bin/buildctl -v
 
 buildctl-daemonless.sh \
   build \
