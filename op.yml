@@ -10,6 +10,10 @@ inputs:
     dir:
       description: context for build
       default: /default_context
+  contextIgnore:
+    file:
+      description: context ignore rules in the format of a .gitignore/.dockerignore
+      default: /default_context_ignore
   instructions:
     file:
       description: build instructions in the format of a Containerfile/Dockerfile
@@ -38,6 +42,7 @@ run:
     files:
       /cmd.sh:
       /Dockerfile: $(instructions)
+      /Dockerfile.dockerignore: $(contextIgnore)
       /root/.docker/config.template.json:
     dirs:
       /buildContext: $(context)
@@ -48,5 +53,5 @@ run:
       password:
       registry:
       username:
-    image: { ref: 'opspecpkgs/opencontainers.image.build:1.0.0'}
-version: 1.0.0
+    image: { ref: 'opspecpkgs/opencontainers.image.build:1.1.0'}
+version: 1.1.0
