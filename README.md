@@ -13,30 +13,29 @@ the op uses [![opspec 0.1.6](https://img.shields.io/badge/opspec-0.1.6-brightgre
 ## Install
 
 ```shell
-opctl op install github.com/opspec-pkgs/opencontainers.image.build#1.1.0
+opctl op install github.com/opspec-pkgs/opencontainers.image.build#1.1.1
 ```
 
 ## Run
 
 ```
-opctl run github.com/opspec-pkgs/opencontainers.image.build#1.1.0
+opctl run github.com/opspec-pkgs/opencontainers.image.build#1.1.1
 ```
 
 ## Compose
 
 ```yaml
 op:
-  ref: github.com/opspec-pkgs/opencontainers.image.build#1.1.0
+  ref: github.com/opspec-pkgs/opencontainers.image.build#1.1.1
   inputs:
-    # required
-    instructions:
-    ### optional; uncomment to override default(s)
-    # cacheDir: /default_cache
-    # context: /default_context
-    # contextIgnore: /default_context_ignore
-    # password:  
-    # registry: docker.io
-    # username:  
+    instructions:  # 👈 required; provide a value
+  ## uncomment to override defaults
+  #   cacheDir: /default_cache
+  #   context: /default_context
+  #   contextIgnore: /default_context_ignore
+  #   password: ""
+  #   registry: "docker.io"
+  #   username: ""
   outputs:
     image:
 ```
