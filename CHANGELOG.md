@@ -5,6 +5,12 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[1.1.1] - 2020-06-16
+
+### Fixed
+
+- Auth to private registry
+
 ## \[1.1.0] - 2019-12-31
 
 ### Added

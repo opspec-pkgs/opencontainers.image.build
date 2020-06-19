@@ -19,14 +19,12 @@ inputs:
       description: build instructions in the format of a Containerfile/Dockerfile
   username:
     string:
-      constraints: { minLength: 1 }
       description: username for auth w/ private registry
-      default: ' '
+      default: ''
   password:
     string:
-      constraints: { minLength: 1 }
       description: password for auth w/ private registry
-      default: ' '
+      default: ''
       isSecret: true
   registry:
     string:
@@ -37,21 +35,30 @@ outputs:
     dir:
       description: image in form of [v1.0.1 OCI (Open Container Initiative) `image-layout`](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md)
 run:
-  container:
-    cmd: [ /cmd.sh ]
-    files:
-      /cmd.sh:
-      /Dockerfile: $(instructions)
-      /Dockerfile.dockerignore: $(contextIgnore)
-      /root/.docker/config.template.json:
-    dirs:
-      /buildContext: $(context)
-      /cacheDir: $(cacheDir)
-      /default_cache:
-      /image: $(image)
-    envVars:
-      password:
-      registry:
-      username:
-    image: { ref: 'opspecpkgs/opencontainers.image.build:1.1.0'}
-version: 1.1.0
+  serial:
+    - op:
+        ref: github.com/opspec-pkgs/base64.encode#1.1.0
+        inputs:
+          rawValue: $(username):$(password)
+        outputs:
+          encodedValue:
+    - container:
+        cmd: [ /cmd.sh ]
+        files:
+          /cmd.sh:
+          /Dockerfile: $(instructions)
+          /Dockerfile.dockerignore: $(contextIgnore)
+          /root/.docker/config.json: 
+            auths:
+              $(registry):
+                auth: $(encodedValue)
+        dirs:
+          /buildContext: $(context)
+          /cacheDir: $(cacheDir)
+          /image: $(image)
+        envVars:
+          password:
+          registry:
+          username:
+        image: { ref: moby/buildkit:master}
+version: 1.1.1
