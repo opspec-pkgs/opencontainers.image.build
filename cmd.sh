@@ -2,6 +2,8 @@
 
 set -e
 
+/setAuths
+
 buildctl-daemonless.sh \
   build \
   --frontend dockerfile.v0 \

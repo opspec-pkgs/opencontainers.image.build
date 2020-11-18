@@ -5,6 +5,12 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[1.2.0] - 2020-11-17
+
+### Added
+
+- Support passing creds for multiple registries
+
 ## \[1.1.1] - 2020-06-16
 
 ### Fixed
