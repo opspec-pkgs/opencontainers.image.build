@@ -2,6 +2,21 @@ description: Builds an open container initiative (OCI) image
 name: github.com/opspec-pkgs/opencontainers.image.build
 opspec: 0.1.6
 inputs:
+  registryCreds:
+    array:
+      default: []
+      description: creds for image registries
+      constraints: 
+        items:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+            registry:
+              format: uri
+              type: string
   cacheDir:
     dir:
       default: /default_cache
@@ -17,48 +32,23 @@ inputs:
   instructions:
     file:
       description: build instructions in the format of a Containerfile/Dockerfile
-  username:
-    string:
-      description: username for auth w/ private registry
-      default: ''
-  password:
-    string:
-      description: password for auth w/ private registry
-      default: ''
-      isSecret: true
-  registry:
-    string:
-      description: private registry to pull image from
-      default: docker.io
 outputs:
   image:
     dir:
       description: image in form of [v1.0.1 OCI (Open Container Initiative) `image-layout`](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md)
 run:
-  serial:
-    - op:
-        ref: github.com/opspec-pkgs/base64.encode#1.1.0
-        inputs:
-          rawValue: $(username):$(password)
-        outputs:
-          encodedValue:
-    - container:
-        cmd: [ /cmd.sh ]
-        files:
-          /cmd.sh:
-          /Dockerfile: $(instructions)
-          /Dockerfile.dockerignore: $(contextIgnore)
-          /root/.docker/config.json: 
-            auths:
-              $(registry):
-                auth: $(encodedValue)
-        dirs:
-          /buildContext: $(context)
-          /cacheDir: $(cacheDir)
-          /image: $(image)
-        envVars:
-          password:
-          registry:
-          username:
-        image: { ref: moby/buildkit:master}
-version: 1.1.1
+  container:
+    cmd: [ /cmd.sh ]
+    files:
+      /cmd.sh:
+      /Dockerfile: $(instructions)
+      /Dockerfile.dockerignore: $(contextIgnore)
+      /setAuths:
+    dirs:
+      /buildContext: $(context)
+      /cacheDir: $(cacheDir)
+      /image: $(image)
+    envVars:
+      registryCreds:
+    image: { ref: moby/buildkit:master}
+version: 1.2.0

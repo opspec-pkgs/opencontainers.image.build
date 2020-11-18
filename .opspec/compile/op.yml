@@ -1,0 +1,14 @@
+name: compile
+description: compiles the bin from go source code
+inputs:
+  srcDir:
+    dir:
+      description: dir containing source code for bin
+      default: .
+run:
+  op:
+    ref: github.com/opspec-pkgs/golang.build.bin#2.0.0
+    inputs:
+      name: setAuths
+      srcDir:
+      goVersion: 1.15

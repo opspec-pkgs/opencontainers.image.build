@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/opspec-pkgs/opencontainers.image.build.svg?branch=master)](https://travis-ci.org/opspec-pkgs/opencontainers.image.build)
 
+<img src="icon.svg" alt="icon" height="100px">
+
 # Problem statement
 
 Builds an open container initiative (OCI) image
@@ -13,29 +15,27 @@ the op uses [![opspec 0.1.6](https://img.shields.io/badge/opspec-0.1.6-brightgre
 ## Install
 
 ```shell
-opctl op install github.com/opspec-pkgs/opencontainers.image.build#1.1.1
+opctl op install github.com/opspec-pkgs/opencontainers.image.build#1.2.0
 ```
 
 ## Run
 
 ```
-opctl run github.com/opspec-pkgs/opencontainers.image.build#1.1.1
+opctl run github.com/opspec-pkgs/opencontainers.image.build#1.2.0
 ```
 
 ## Compose
 
 ```yaml
 op:
-  ref: github.com/opspec-pkgs/opencontainers.image.build#1.1.1
+  ref: github.com/opspec-pkgs/opencontainers.image.build#1.2.0
   inputs:
     instructions:  # 👈 required; provide a value
   ## uncomment to override defaults
   #   cacheDir: /default_cache
   #   context: /default_context
   #   contextIgnore: /default_context_ignore
-  #   password: ""
-  #   registry: "docker.io"
-  #   username: ""
+  #   registryCreds: 
   outputs:
     image:
 ```
