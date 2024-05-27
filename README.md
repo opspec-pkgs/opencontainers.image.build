@@ -32,6 +32,7 @@ op:
   #   cacheDir: /default_cache
   #   context: /default_context
   #   contextIgnore: /default_context_ignore
+  #   platformsCsv: ""
   outputs:
     image:
 ```

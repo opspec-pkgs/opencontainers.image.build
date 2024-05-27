@@ -36,6 +36,14 @@ inputs:
   instructions:
     file:
       description: build instructions in the format of a Containerfile/Dockerfile
+  platformsCsv:
+    string:
+      default: ''
+      description: |
+        Platforms the image will be built for in the form of comma separated [platform specifiers](https://github.com/containerd/containerd/blob/8686ededfc90076914c5238eb96c883ea093a8ba/platforms/platforms.go#L63)
+        
+        e.g. 'linux/amd64,linux/arm64'
+
 outputs:
   image:
     dir:
@@ -61,6 +69,7 @@ run:
           --output type=oci,tar=false,dest=/image
           --import-cache type=local,src=/cacheDir
           --export-cache type=local,dest=/cacheDir,mode=max
+          --opt platform=$(platformsCsv)
       dirs:
         /buildContext: $(context)
         /cacheDir: $(cacheDir)
