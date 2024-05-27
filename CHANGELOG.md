@@ -7,6 +7,10 @@ All notable changes will be documented in this file in accordance with
 
 ## \[2.0.0] - 2024-05-27
 
+### Added
+
+- Support for building multi-platform images via `platformsCsv` input
+
 ### Changed
 
 - Authentication configuration is now provided via `authConfig` (in the same format as dockers config.json) in order to ease usage for docker users.
