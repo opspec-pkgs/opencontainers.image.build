@@ -1,21 +1,26 @@
 description: Builds an open container initiative (OCI) image
 name: github.com/opspec-pkgs/opencontainers.image.build
 inputs:
-  registryCreds:
-    array:
-      default: []
-      description: creds for image registries
-      constraints: 
-        items:
-          type: object
-          properties:
-            username:
-              type: string
-            password:
-              type: string
-            registry:
-              format: uri
-              type: string
+  authConfig:
+    object:
+      default: {}
+      description: |
+        Auth config for image registries; same format as a docker config.json
+
+        Note that when using docker and a credential helper (e.g. the default with macOS docker desktop) ~/.docker/config.json will not directly contain credentials. If you need to provide auth in this case, you'll need to generate a configuration file with base64 encoded credentials. See https://github.com/docker/for-mac/issues/4100 for more discussion on the format of this file.
+      constraints:
+        properties:
+          auths:
+            type: object
+            description: |
+              Keys are registry hostname/urls and values contain authentication information
+            additionalProperties:
+              type: object
+              properties:
+                auth:
+                  description: Base64 encoded string of the format `{username}:{password}`
+                  type: string
+                  format: base64
   cacheDir:
     dir:
       default: /default_cache
@@ -36,18 +41,33 @@ outputs:
     dir:
       description: image in form of [v1.0.1 OCI (Open Container Initiative) `image-layout`](https://github.com/opencontainers/image-spec/blob/v1.0.1/image-layout.md)
 run:
-  container:
-    cmd: [ /cmd.sh ]
-    files:
-      /cmd.sh:
-      /Dockerfile: $(instructions)
-      /Dockerfile.dockerignore: $(contextIgnore)
-      /setAuths:
-    dirs:
-      /buildContext: $(context)
-      /cacheDir: $(cacheDir)
-      /image: $(image)
-    envVars:
-      registryCreds:
-    image: { ref: moby/buildkit:master}
-version: 1.3.0
+  serial:
+  - op:
+      ref: github.com/opspec-pkgs/docker.config.clean#1.1.0
+      inputs:
+        dockerConfig: $(authConfig)
+      outputs:
+        dockerConfigCleaned: $(authConfig)
+  - container:
+      cmd:
+        - sh
+        - -ce
+        - buildctl-daemonless.sh \
+            build \
+            --frontend dockerfile.v0 \
+            --local context=/buildContext \
+            --local dockerfile=/ \
+            --output type=oci,tar=false,dest=/image \
+            --import-cache type=local,src=/cacheDir \
+            --export-cache type=local,dest=/cacheDir,mode=max
+      dirs:
+        /root/.docker/config.json: $(authConfig)
+        /buildContext: $(context)
+        /cacheDir: $(cacheDir)
+        /image: $(image)
+      files:
+        /Dockerfile: $(instructions)
+        /Dockerfile.dockerignore: $(contextIgnore)
+      image:
+        ref: moby/buildkit:master
+version: 2.0.0

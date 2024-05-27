@@ -11,27 +11,27 @@ Builds an open container initiative (OCI) image
 ## Visualize
 
 ```shell
-opctl ui github.com/opspec-pkgs/opencontainers.image.build#1.3.0
+opctl ui github.com/opspec-pkgs/opencontainers.image.build#2.0.0
 ```
 
 ## Run
 
 ```
-opctl run github.com/opspec-pkgs/opencontainers.image.build#1.3.0
+opctl run github.com/opspec-pkgs/opencontainers.image.build#2.0.0
 ```
 
 ## Compose
 
 ```yaml
 op:
-  ref: github.com/opspec-pkgs/opencontainers.image.build#1.3.0
+  ref: github.com/opspec-pkgs/opencontainers.image.build#2.0.0
   inputs:
     instructions:  # 👈 required; provide a value
   ## uncomment to override defaults
+  #   authConfig: [object Object]
   #   cacheDir: /default_cache
   #   context: /default_context
   #   contextIgnore: /default_context_ignore
-  #   registryCreds: 
   outputs:
     image:
 ```
