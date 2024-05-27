@@ -5,6 +5,12 @@ All notable changes will be documented in this file in accordance with
 
 ## \[Unreleased]
 
+## \[2.0.0] - 2024-05-27
+
+### Changed
+
+- Authentication configuration is now provided via `authConfig` (in the same format as dockers config.json) in order to ease usage for docker users.
+
 ## \[1.3.0] - 2024-05-27
 
 ### Updated
