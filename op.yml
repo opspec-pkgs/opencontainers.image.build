@@ -1,6 +1,5 @@
 description: Builds an open container initiative (OCI) image
 name: github.com/opspec-pkgs/opencontainers.image.build
-opspec: 0.1.6
 inputs:
   registryCreds:
     array:
@@ -51,4 +50,4 @@ run:
     envVars:
       registryCreds:
     image: { ref: moby/buildkit:master}
-version: 1.2.0
+version: 1.3.0
