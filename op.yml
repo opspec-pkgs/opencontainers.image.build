@@ -62,11 +62,11 @@ run:
           --import-cache type=local,src=/cacheDir
           --export-cache type=local,dest=/cacheDir,mode=max
       dirs:
-        /root/.docker/config.json: $(authConfig)
         /buildContext: $(context)
         /cacheDir: $(cacheDir)
         /image: $(image)
       files:
+        /root/.docker/config.json: $(authConfig)
         /Dockerfile: $(instructions)
         /Dockerfile.dockerignore: $(contextIgnore)
       image:
