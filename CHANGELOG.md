@@ -9,11 +9,12 @@ All notable changes will be documented in this file in accordance with
 
 ### Added
 
+- Ability to push built image to remote repositories via `isPushEnabled` and `namesCsv` inputs
 - Support for building multi-platform images via `platformsCsv` input
 
 ### Changed
 
-- Authentication configuration is now provided via `authConfig` (in the same format as dockers config.json) in order to ease usage for docker users.
+- `cacheDir` renamed to `cache` for consistency
 
 ## \[1.3.0] - 2024-05-27
 

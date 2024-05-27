@@ -28,11 +28,13 @@ op:
   inputs:
     instructions:  # 👈 required; provide a value
   ## uncomment to override defaults
-  #   authConfig: [object Object]
-  #   cacheDir: /default_cache
+  #   cache: /default_cache
   #   context: /default_context
   #   contextIgnore: /default_context_ignore
+  #   isPushEnabled: false
+  #   namesCsv: ""
   #   platformsCsv: ""
+  #   registryCreds: $(opctl://./secrets/docker.io)
   outputs:
     image:
 ```
